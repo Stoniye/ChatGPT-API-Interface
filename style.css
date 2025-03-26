@@ -4,19 +4,23 @@ body {
     height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
     background-color: #2B2B2B;
 }
+
 .input-container {
-    width: 900px;
+    width: 100%;
+    max-width: 900px;
     position: fixed;
-    bottom: 150px;
+    bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
     display: flex;
     justify-content: center;
 }
+
 .rounded-input {
     width: 100%;
-    max-width: 900px;
     padding: 12px 20px;
     border: none;
     border-radius: 15px;
@@ -26,15 +30,46 @@ body {
     background-color: #3A3A3A;
     color: white;
     font-family: Arial, Helvetica, sans-serif;
+    resize: vertical;
+    min-height: 40px;
+    overflow-y: auto;
+}
+
+.rounded-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    background-color: #3A3A3A;
+    border: none;
+    border-radius: 15%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.rounded-button:hover {
+    background-color: #333333;
+}
+
+.rounded-button:focus {
+    outline: 2px solid #3A3A3A;
+    outline-offset: 2px;
 }
 
 .chat-container {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    width: 300px;
-    margin-bottom: 200px;
+    width: 100%;
+    max-width: 900px;
+    margin-top: 20px;
+    margin-bottom: 100px;
+    padding-left: 20px;
+    padding-right: 20px;
+    overflow-y: auto;
+    flex-grow: 1;
 }
+
 .chat-message {
     background-color: #3A3A3A;
     color: white;
@@ -43,7 +78,10 @@ body {
     margin: 5px 0;
     max-width: 80%;
     font-family: Arial, Helvetica, sans-serif;
+    align-self: flex-end;
+    text-align: right;
 }
+
 .chat-answer {
     background-color: #505050;
     color: white;
@@ -51,10 +89,7 @@ body {
     border-radius: 10px;
     margin: 5px 0;
     max-width: 80%;
-    align-self: flex-start;
     font-family: Arial, Helvetica, sans-serif;
-}
-
-.input-container {
-    margin-top: 10px;
+    align-self: flex-start;
+    text-align: left;
 }

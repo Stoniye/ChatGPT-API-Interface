@@ -7,14 +7,12 @@
 </head>
 
 <body>
-<div id="chat-container" class="chat-container"></div>
-<label>
-    <input id="key-input" type="text" class="rounded-input" placeholder="Input the API Key..." onkeydown="handleKey(event)">
-</label>
-<div class="input-container">
-    <label>
-        <input type="text" class="rounded-input" placeholder="Type your message..." onkeydown="handleInput(event)">
-    </label>
+<button class="rounded-button"></button>
+<div class="chat-container" id="chat-container">
+    <div class="input-container">
+        <label for="messageInput"></label>
+        <textarea class="rounded-input" placeholder="Type your message..." id="messageInput"></textarea>
+    </div>
 </div>
 </body>
 

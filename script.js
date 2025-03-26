@@ -1,20 +1,42 @@
-var APIKey = "";
-const chatContainer = document.getElementById("chat-container");
-const testMode = false;
+let APIKey = "";
 
-function handleInput(event) {
-    if (event.key === "Enter") {
-        const inputField = event.target;
-        const message = inputField.value.trim();
-        if (message !== "") {
-            processMessage(message, true);
-            inputField.value = "";
-        }
+//Elements
+const messageInput = document.getElementById('messageInput');
+const chatContainer = document.getElementById("chat-container");
+
+//Event Listener
+messageInput.addEventListener('input', handleInputSize);
+messageInput.addEventListener('keydown', function(e) {handleKey(e)});
+
+//Process Variables
+const testMode = true;
+
+
+//UI HANDLING//
+function handleInputSize() {
+    this.style.height = 'auto';
+    this.style.height = (this.scrollHeight) + 'px';
+    const maxHeight = 250;
+    if (this.scrollHeight > maxHeight) {
+        this.style.height = maxHeight + 'px';
+        this.style.overflowY = 'scroll';
+    } else {
+        this.style.overflowY = 'hidden';
     }
 }
 
+function handleKey(event) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        processMessage(messageInput.value, true);
+        messageInput.value = '';
+    }
+}
+
+//MESSAGE HANDLING//
 function processMessage(message, user) {
     const messageElement = document.createElement("div");
+
     if (user)
         messageElement.classList.add("chat-message");
     else
@@ -34,6 +56,11 @@ function APICall(message) {
     }
 
     APIKey = document.getElementById("key-input").value.trim();
+    if(APIKey === ""){
+        throw new Error("No API Key provided");
+        return;
+    }
+
     fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -47,18 +74,16 @@ function APICall(message) {
             ]
         })
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok " + response.statusText);
-            }
-            return response.json();
-        })
-        .then(data => {
-            const answer = data.choices[0].message.content;
-            processMessage(answer, false);
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            processMessage("An error occurred while fetching response from the ChatGPT API. Check Console for Error Messages", false);
-        });
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Network response was not ok " + response.statusText);
+        }
+    })
+    .then(data => {
+        processMessage(data.choices[0].message.content, false);
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        processMessage("An error occurred while fetching response from the ChatGPT API. Check Console for Error Messages", false);
+    });
 }
