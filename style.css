@@ -36,7 +36,6 @@ body {
 }
 
 .input-api-container {
-    display: none;
     position: fixed;
     top: 80px;
     right: 50px;

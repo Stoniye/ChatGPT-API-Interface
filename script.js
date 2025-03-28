@@ -1,4 +1,4 @@
-let APIKey = "";
+let APIKey = localStorage.getItem('apiKey');
 
 //Elements
 const messageInput = document.getElementById('messageInput');
@@ -18,8 +18,13 @@ const testMode = true;
 
 
 //UI HANDLING//
+function onLoad(){
+    apiContainer.style.display = 'none';
+}
+
 roundedButton.addEventListener('click', () => {
     if (apiContainer.style.display === 'none') {
+        apiInput.value = APIKey;
         apiContainer.style.display = 'block';
     } else {
         apiContainer.style.display = 'none';
@@ -39,6 +44,7 @@ function handleInputSize() {
 }
 
 function handleAPIInput() {
+    localStorage.setItem('apiKey', apiInput.value);
     APIKey = apiInput.value;
 }
 
@@ -68,6 +74,7 @@ function processMessage(message, user) {
 
 function APICall(message) {
     if(testMode){
+        console.log(APIKey);
         processMessage("Test mode is active, no API Call", false);
         return;
     }
