@@ -15,6 +15,7 @@ apiInput.addEventListener('input', handleAPIInput);
 
 //Process Variables
 const testMode = false;
+let chatHistory = "";
 
 
 //UI HANDLING//
@@ -60,10 +61,14 @@ function handleKey(event) {
 function processMessage(message, user) {
     const messageElement = document.createElement("div");
 
-    if (user)
+    if (user){
         messageElement.classList.add("chat-message");
-    else
+        chatHistory += "User: " + message + "\n";
+    }
+    else{
         messageElement.classList.add("chat-answer");
+        chatHistory += "ChatGPT: " + message + "\n";
+    }
 
     messageElement.textContent = message;
     chatContainer.appendChild(messageElement);
@@ -78,7 +83,7 @@ function APICall(message) {
         return;
     }
 
-    if(APIKey === ""){
+    if(APIKey == ""){
         throw new Error("No API Key provided");
         return;
     }
@@ -92,7 +97,8 @@ function APICall(message) {
         body: JSON.stringify({
             model: "gpt-4o-mini",
             messages: [
-                { role: "user", content: message }
+                {role: "system", content: "You are a helpful AI, the Chat History is: \n" + chatHistory + "The user made a new prompt, continue the Chat"},
+                {role: "user", content: message }
             ]
         })
     })
