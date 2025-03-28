@@ -14,7 +14,7 @@ messageInput.addEventListener('keydown', function(e) {handleKey(e)});
 apiInput.addEventListener('input', handleAPIInput);
 
 //Process Variables
-const testMode = true;
+const testMode = false;
 
 
 //UI HANDLING//
