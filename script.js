@@ -74,7 +74,6 @@ function processMessage(message, user) {
 
 function APICall(message) {
     if(testMode){
-        console.log(APIKey);
         processMessage("Test mode is active, no API Call", false);
         return;
     }
@@ -97,16 +96,17 @@ function APICall(message) {
             ]
         })
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Network response was not ok " + response.statusText);
-        }
-    })
-    .then(data => {
-        processMessage(data.choices[0].message.content, false);
-    })
-    .catch(error => {
-        console.error("Error:", error);
-        processMessage("An error occurred while fetching response from the ChatGPT API. Check Console for Error Messages", false);
-    });
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok " + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            processMessage(data.choices[0].message.content, false);
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            processMessage("An error occurred while fetching response from the ChatGPT API. Check Console for Error Messages", false);
+        });
 }
