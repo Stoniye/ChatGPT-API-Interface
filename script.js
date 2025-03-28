@@ -2,17 +2,30 @@ let APIKey = "";
 
 //Elements
 const messageInput = document.getElementById('messageInput');
-const chatContainer = document.getElementById("chat-container");
+const chatContainer = document.getElementById("chatContainer");
+const apiContainer = document.getElementById("apiContainer");
+const apiInput = document.getElementById('apiInput');
+
+const roundedButton = document.querySelector('.rounded-button');
 
 //Event Listener
 messageInput.addEventListener('input', handleInputSize);
 messageInput.addEventListener('keydown', function(e) {handleKey(e)});
+apiInput.addEventListener('input', handleAPIInput);
 
 //Process Variables
 const testMode = true;
 
 
 //UI HANDLING//
+roundedButton.addEventListener('click', () => {
+    if (apiContainer.style.display === 'none') {
+        apiContainer.style.display = 'block';
+    } else {
+        apiContainer.style.display = 'none';
+    }
+});
+
 function handleInputSize() {
     this.style.height = 'auto';
     this.style.height = (this.scrollHeight) + 'px';
@@ -23,6 +36,10 @@ function handleInputSize() {
     } else {
         this.style.overflowY = 'hidden';
     }
+}
+
+function handleAPIInput() {
+    APIKey = apiInput.value;
 }
 
 function handleKey(event) {
@@ -55,7 +72,6 @@ function APICall(message) {
         return;
     }
 
-    APIKey = document.getElementById("key-input").value.trim();
     if(APIKey === ""){
         throw new Error("No API Key provided");
         return;
