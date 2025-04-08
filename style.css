@@ -43,7 +43,7 @@ body {
     height: 40px;
     background-color: #3A3A3A;
     border: none;
-    border-radius: 15%;
+    border-radius: 13px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
@@ -56,7 +56,7 @@ body {
     height: 40px;
     background-color: #3A3A3A;
     border: none;
-    border-radius: 15%;
+    border-radius: 13px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
@@ -75,6 +75,7 @@ body {
     position: fixed;
     flex-direction: column;
     width: 100%;
+    left: 200px;
     max-width: 900px;
     height: 75%;
     margin-top: 20px;
@@ -138,7 +139,7 @@ body {
     height: 40px;
     background-color: #711a1a;
     border: none;
-    border-radius: 15%;
+    border-radius: 13px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
@@ -186,4 +187,74 @@ body {
     font-size: 16px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     font-family: Arial, Helvetica, sans-serif;
+}
+
+.sidebar {
+    width: 150px;
+    left: 0;
+    position: fixed;
+    background-color: #1e1e1e;
+    color: #f9fafb;
+    display: block;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 20px;
+    border-right: 1px solid #1b1b1b;
+    border-bottom-right-radius: 13px;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.sidebar-button {
+    width: 100%;
+    padding: 12px 24px;
+    text-align: left;
+    background-color: transparent;
+    color: #f9fafb;
+    border: none;
+    border-left: 3px solid transparent;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-left-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+.sidebar-button:hover {
+    background-color: #2b2b2b;
+    border-left-color: #393939;
+}
+
+.sidebar-button i {
+    margin-right: 12px;
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.new-chat-button {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    width: 130px;
+    height: 40px;
+    background-color: #3A3A3A;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    border: none;
+    border-radius: 13px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.new-chat-button:hover {
+    background-color: #333333;
+}
+
+.new-chat-button:focus {
+    outline: 2px solid #3A3A3A;
+    outline-offset: 2px;
 }

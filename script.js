@@ -10,15 +10,18 @@ const chatContainer = document.getElementById("chatContainer");
 messageInput.addEventListener('input', handleInputSize);
 messageInput.addEventListener('keydown', function(e) {handleKey(e)});
 apiInput.addEventListener('input', handleAPIInput);
+document.getElementById('newChatButton').addEventListener('click', createNewChat);
 
 //Process Variables
 const testMode = false;
-let chatHistory = "";
+let chatHistory = [];
+let chatID = generateRandomString(5);
 
 //UI HANDLING//
 function onLoad(){
     defaultValues();
     document.getElementById('settingsContainer').style.display = 'none';
+    loadAllChats();
 }
 
 function defaultValues(){
@@ -73,23 +76,98 @@ function processMessage(message, user) {
 
     if (user){
         messageElement.classList.add("chat-message");
-        chatHistory += "User: " + message + "\n";
     }
     else{
         messageElement.classList.add("chat-answer");
-        chatHistory += "ChatGPT: " + message + "\n";
     }
 
     messageElement.textContent = message;
     chatContainer.appendChild(messageElement);
 
+    saveChatHistory(chatID, message);
+
     if (user)
         APICall(message);
 }
 
+function loadAllChats(){
+    const chats = loadAllChatHistories();
+    const sidebar = document.getElementById('sidebar');
+
+    chats.forEach(chat => {
+        const newButton = document.createElement('button');
+
+        newButton.className = 'sidebar-button';
+        newButton.textContent = chat.id;
+
+        sidebar.appendChild(newButton);
+
+        newButton.addEventListener('click', function() {
+            displayChatHistory(chat.id);
+            chatID = chat.id;
+        });
+    })
+}
+
+function loadAllChatHistories() {
+    const chatHistories = [];
+
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+
+        if (key.startsWith('chatHistory_')) {
+            const id = key.replace('chatHistory_', '');
+            const history = JSON.parse(localStorage.getItem(key)) || [];
+            chatHistories.push({ id, history });
+        }
+    }
+
+    return chatHistories;
+}
+
+
+function loadChatHistoryById(id) {
+    return JSON.parse(localStorage.getItem('chatHistory_' + id)) || [];
+}
+
+function clearChat() {
+    const existingMessages = chatContainer.querySelectorAll('.chat-message, .chat-answer');
+    existingMessages.forEach(message => message.remove());
+}
+
+function displayChatHistory(id) {
+    clearChat();
+
+    chatHistory = loadChatHistoryById(id);
+    let user = true;
+
+    chatHistory.forEach(message => {
+        const messageElement = document.createElement("div");
+
+        if (user){
+            messageElement.classList.add("chat-message");
+        }
+        else{
+            messageElement.classList.add("chat-answer");
+        }
+
+        messageElement.textContent = message;
+        chatContainer.appendChild(messageElement);
+
+        user = !user;
+    });
+
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+function saveChatHistory(id, newMessage) {
+    chatHistory.push(newMessage);
+    localStorage.setItem('chatHistory_' + id, JSON.stringify(chatHistory));
+}
+
 function APICall(message) {
     if(testMode){
-        processMessage("Test mode is active, no API Call", false);
+        processMessage("This is a Test Message", false);
         return;
     }
 
@@ -130,4 +208,20 @@ function APICall(message) {
             console.error("Error:", error);
             processMessage("An error occurred while fetching response from the ChatGPT API. Check Console for Error Messages", false);
         });
+}
+
+function generateRandomString(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+
+function createNewChat() {
+    chatHistory = [];
+    chatID = generateRandomString(5);
+    clearChat();
 }
