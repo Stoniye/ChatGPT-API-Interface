@@ -1,12 +1,10 @@
 let APIKey = localStorage.getItem('apiKey');
+let modelName = localStorage.getItem('modelName');
+let usedTokens = parseInt(localStorage.getItem('usedTokens'));
 
 //Elements
 const messageInput = document.getElementById('messageInput');
 const chatContainer = document.getElementById("chatContainer");
-const apiContainer = document.getElementById("apiContainer");
-const apiInput = document.getElementById('apiInput');
-
-const roundedButton = document.querySelector('.rounded-button');
 
 //Event Listener
 messageInput.addEventListener('input', handleInputSize);
@@ -17,19 +15,31 @@ apiInput.addEventListener('input', handleAPIInput);
 const testMode = false;
 let chatHistory = "";
 
-
 //UI HANDLING//
 function onLoad(){
-    apiContainer.style.display = 'none';
+    defaultValues();
+    document.getElementById('settingsContainer').style.display = 'none';
 }
 
-roundedButton.addEventListener('click', () => {
-    if (apiContainer.style.display === 'none') {
-        apiInput.value = APIKey;
-        apiContainer.style.display = 'block';
-    } else {
-        apiContainer.style.display = 'none';
+function defaultValues(){
+    if(isNaN(usedTokens)){
+        usedTokens = 0;
     }
+
+    if(modelName == null){
+        modelName = 'gpt-4o-mini';
+    }
+}
+
+document.getElementById('settingsButton').addEventListener('click', () => {
+    document.getElementById('usedTokensLabel').textContent = usedTokens;
+    document.getElementById('apiInput').value = APIKey;
+    document.getElementById('modelInput').value = modelName;
+    document.getElementById('settingsContainer').style.display = 'block';
+});
+
+document.getElementById('settingsCloseButton').addEventListener('click', () => {
+    document.getElementById('settingsContainer').style.display = 'none';
 });
 
 function handleInputSize() {
@@ -83,7 +93,7 @@ function APICall(message) {
         return;
     }
 
-    if(APIKey == ""){
+    if(APIKey === ""){
         throw new Error("No API Key provided");
         return;
     }
@@ -95,7 +105,7 @@ function APICall(message) {
             "Authorization": "Bearer " + APIKey
         },
         body: JSON.stringify({
-            model: "gpt-4o-mini",
+            model: modelName,
             messages: [
                 {role: "system", content: "You are a helpful AI, the Chat History is: \n" + chatHistory + "The user made a new prompt, continue the Chat"},
                 {role: "user", content: message }
@@ -109,7 +119,12 @@ function APICall(message) {
             return response.json();
         })
         .then(data => {
+            // Process the message
             processMessage(data.choices[0].message.content, false);
+
+            // Log token usage
+            usedTokens += data.usage.total_tokens;
+            localStorage.setItem('usedTokens', usedTokens.toString());
         })
         .catch(error => {
             console.error("Error:", error);

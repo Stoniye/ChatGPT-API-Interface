@@ -7,17 +7,45 @@
 </head>
 
 <body onload="onLoad()">
-<button class="rounded-button"></button>
-<div class="input-api-container" id="apiContainer">
-    <label for="apiInput"></label>
-    <textarea class="rounded-api-input" placeholder="API Key..." id="apiInput"></textarea>
-</div>
+
+<button class="rounded-button" id="settingsButton"></button>
+
 <div class="chat-container" id="chatContainer">
     <div class="input-container">
         <label for="messageInput"></label>
         <textarea class="rounded-input" placeholder="Type your message..." id="messageInput"></textarea>
     </div>
 </div>
+
+<div class="settings-container" id="settingsContainer">
+    <div class="settings-properties-container">
+        <button class="rounded-close-button" id="settingsCloseButton"></button>
+
+        <div class="input-group">
+            <label for="apiInput">API Key</label>
+            <input type="text" placeholder="API Key.." id="apiInput" class="rounded-settings-input" />
+        </div>
+
+        <div class="input-group">
+            <label for="modelInput">
+                Model Name
+                <a href="https://platform.openai.com/docs/pricing" target="_blank" title="Lern more about model names and their pricing">
+                    <img src="images/question.png" sizes="12" height="12" alt="Open">
+                </a>
+            </label>
+
+            <input type="text" placeholder="Enter Model Name.." id="modelInput" class="rounded-settings-input" />
+        </div>
+
+        <div class="input-group">
+            <label>Used Tokens</label>
+            <span id="usedTokensLabel" class="variable-label"></span>
+        </div>
+
+    </div>
+</div>
+
+
 </body>
 
 <script src="script.js"></script>

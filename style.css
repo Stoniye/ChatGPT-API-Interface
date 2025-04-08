@@ -48,22 +48,6 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.rounded-api-input {
-    width: 100%;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 15px;
-    font-size: 16px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    outline: none;
-    background-color: #3A3A3A;
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-    resize: vertical;
-    min-height: 40px;
-    overflow-y: auto;
-}
-
 .rounded-button {
     position: fixed;
     top: 10px;
@@ -124,4 +108,82 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     align-self: flex-start;
     text-align: left;
+}
+
+.settings-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #2b2b2b;
+    height: 100vh;
+    width: 100vw;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 80px;
+}
+
+.settings-properties-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rounded-close-button {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    background-color: #711a1a;
+    border: none;
+    border-radius: 15%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.rounded-close-button:hover {
+    background-color: #501010;
+}
+
+.rounded-close-button:focus {
+    background-color: #711a1a;
+    outline-offset: 2px;
+}
+
+.input-group {
+    margin: 30px 0;
+}
+
+.rounded-settings-input {
+    width: 300px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 13px;
+    font-size: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    outline: none;
+    background-color: #3A3A3A;
+    color: white;
+}
+
+.input-group label {
+    display: block;
+    font-weight: bold;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.variable-label {
+    display: inline-block;
+    padding: 12px 20px;
+    min-width: 60px;
+    background-color: #3A3A3A;
+    text-align: center;
+    color: white;
+    border-radius: 13px;
+    font-size: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: Arial, Helvetica, sans-serif;
 }
