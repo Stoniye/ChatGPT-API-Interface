@@ -7,9 +7,10 @@ const messageInput = document.getElementById('messageInput');
 const chatContainer = document.getElementById("chatContainer");
 
 //Event Listener
-messageInput.addEventListener('input', handleInputSize);
+messageInput.addEventListener('focus', scaleInput);
+messageInput.addEventListener('blur', shrinkInput);
 messageInput.addEventListener('keydown', function(e) {handleKey(e)});
-apiInput.addEventListener('input', handleAPIInput);
+document.getElementById("apiInput").addEventListener('input', handleAPIInput);
 document.getElementById('newChatButton').addEventListener('click', createNewChat);
 
 //Process Variables
@@ -45,16 +46,12 @@ document.getElementById('settingsCloseButton').addEventListener('click', () => {
     document.getElementById('settingsContainer').style.display = 'none';
 });
 
-function handleInputSize() {
-    this.style.height = 'auto';
-    this.style.height = (this.scrollHeight) + 'px';
-    const maxHeight = 250;
-    if (this.scrollHeight > maxHeight) {
-        this.style.height = maxHeight + 'px';
-        this.style.overflowY = 'scroll';
-    } else {
-        this.style.overflowY = 'hidden';
-    }
+function scaleInput() {
+    this.style.height = 100 + 'px';
+}
+
+function shrinkInput() {
+    this.style.height = 20 + 'px';
 }
 
 function handleAPIInput() {
@@ -72,6 +69,14 @@ function handleKey(event) {
 
 //MESSAGE HANDLING//
 function processMessage(message, user) {
+    if (message === "" || message === null)
+        return;
+
+    if(APIKey == null || APIKey === "") {
+        alert("API key is required, no API Key provided.\n\nIf you need a Tutorial:\nhttps://github.com/Stoniye/ChatGPT-API-Interface?tab=readme-ov-file#how-to-set-up-chatgpt-in-5-minutes");
+        return;
+    }
+
     const messageElement = document.createElement("div");
 
     if (user){
@@ -86,19 +91,20 @@ function processMessage(message, user) {
 
     saveChatHistory(chatID, message);
 
-    if (user)
+    if(user)
         APICall(message);
 }
 
 function loadAllChats(){
     const chats = loadAllChatHistories();
     const sidebar = document.getElementById('sidebar');
+    sidebar.innerHTML = '';
 
     chats.forEach(chat => {
         const newButton = document.createElement('button');
 
         newButton.className = 'sidebar-button';
-        newButton.textContent = chat.id;
+        newButton.innerHTML = `<p>${chat.id}</p><button>D</button>`;
 
         sidebar.appendChild(newButton);
 
@@ -106,7 +112,19 @@ function loadAllChats(){
             displayChatHistory(chat.id);
             chatID = chat.id;
         });
+
+        newButton.querySelector('button').addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (chatID === chat.id)
+                createNewChat();
+            deleteChat(chat.id);
+        })
     })
+}
+
+function deleteChat(chatID, parent){
+    localStorage.removeItem('chatHistory_' + chatID);
+    loadAllChats();
 }
 
 function loadAllChatHistories() {
@@ -161,8 +179,15 @@ function displayChatHistory(id) {
 }
 
 function saveChatHistory(id, newMessage) {
+    let existed = true;
+    if (localStorage.getItem('chatHistory_' + id) == null)
+        existed = false;
+
     chatHistory.push(newMessage);
     localStorage.setItem('chatHistory_' + id, JSON.stringify(chatHistory));
+
+    if(!existed)
+        loadAllChats();
 }
 
 function APICall(message) {

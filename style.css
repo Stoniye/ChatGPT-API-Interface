@@ -9,43 +9,26 @@ body {
 }
 
 .input-container {
-    width: 100%;
-    max-width: 900px;
+    right: 15%;
+    left: 25%;
     position: fixed;
     bottom: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
     display: flex;
-    justify-content: center;
 }
 
 .rounded-input {
     width: 100%;
     padding: 12px 20px;
     border: none;
-    border-radius: 15px;
+    border-radius: 13px;
     font-size: 16px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     outline: none;
     background-color: #3A3A3A;
     color: white;
     font-family: Arial, Helvetica, sans-serif;
-    resize: vertical;
-    min-height: 40px;
-    overflow-y: auto;
-}
-
-.input-api-container {
-    position: fixed;
-    top: 80px;
-    right: 50px;
-    width: 140px;
-    height: 40px;
-    background-color: #3A3A3A;
-    border: none;
-    border-radius: 13px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    resize: none;
+    height: 20px;
 }
 
 .rounded-button {
@@ -74,9 +57,8 @@ body {
     display: flex;
     position: fixed;
     flex-direction: column;
-    width: 100%;
-    left: 200px;
-    max-width: 900px;
+    right: 15%;
+    left: 25%;
     height: 75%;
     margin-top: 20px;
     margin-bottom: 120px;
@@ -91,7 +73,7 @@ body {
     background-color: #3A3A3A;
     color: white;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 13px;
     margin: 5px 0;
     max-width: 80%;
     font-family: Arial, Helvetica, sans-serif;
@@ -103,7 +85,7 @@ body {
     background-color: #505050;
     color: white;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 13px;
     margin: 5px 0;
     max-width: 80%;
     font-family: Arial, Helvetica, sans-serif;
@@ -190,7 +172,7 @@ body {
 }
 
 .sidebar {
-    width: 150px;
+    width: 250px;
     left: 0;
     position: fixed;
     background-color: #1e1e1e;
@@ -203,6 +185,8 @@ body {
     border-bottom-right-radius: 13px;
     height: 100vh;
     box-sizing: border-box;
+    overflow-y: auto;
+    scrollbar-color: #2b2b2b #1e1e1e;
 }
 
 .sidebar-button {
@@ -226,20 +210,26 @@ body {
     border-left-color: #393939;
 }
 
-.sidebar-button i {
-    margin-right: 12px;
-    width: 20px;
-    height: 20px;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
+.sidebar-button p {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.sidebar-button button {
+    position: relative;
+    margin-left: auto;
+    height: 30px;
+    width: 30px;
+    background-color: #711a1a;
+    outline: none;
+    border-width: 0;
+    border-radius: 5px;
 }
 
 .new-chat-button {
     position: fixed;
     bottom: 10px;
     left: 10px;
-    width: 130px;
+    width: 230px;
     height: 40px;
     background-color: #3A3A3A;
     color: white;
