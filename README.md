@@ -8,7 +8,7 @@ Follow these step-by-step instructions to set up ChatGPT using the OpenAI API:
 4. Click on **"Create new key."**  
 5. Follow the on-screen instructions.  
 6. Once the key is created, click **"Copy"** to save it.  
-7. Open the [ChatGPT-API-Interface](https://stoniye.github.io/ChatGPT-API-Interface/).  
+7. Open the [ChatGPT-API-Website](https://stoniye.github.io/ChatGPT-API-Website/).  
 8. Click the button in the top left corner.  
 9. Paste your API key into the designated field.  
 10. You're all set!  
